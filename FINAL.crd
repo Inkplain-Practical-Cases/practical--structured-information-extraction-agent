@@ -5,7 +5,7 @@
   "generated_at": "2026-10-10T16:00:00Z",
   "source": {
     "repo": "https://github.com/Inkplain-Practical-Cases/practical--structured-information-extraction-agent",
-    "revision": "step-05-evaluate-extraction-fixtures",
+    "revision": "main",
     "roots": {
       "backend": "app"
     },
@@ -76,7 +76,7 @@
       "attributes": {
         "endpoint": "POST /process"
       },
-      "step_change": "changed"
+      "step_change": "unchanged"
     },
     {
       "id": "be.handle_extract",
@@ -169,7 +169,7 @@
         }
       ],
       "attributes": {},
-      "step_change": "changed"
+      "step_change": "unchanged"
     },
     {
       "id": "be.extract_email",
@@ -423,17 +423,17 @@
         }
       ],
       "attributes": {},
-      "step_change": "added"
+      "step_change": "unchanged"
     }
   ],
   "dependencies": [],
   "unresolved": [],
   "step": {
-    "no": 5,
+    "no": "final",
     "of": 5,
-    "title": "Evaluate extraction fixtures",
-    "branch": "step-05-evaluate-extraction-fixtures",
-    "previous": "STEP-4.crd",
+    "title": "Final version",
+    "branch": "main",
+    "previous": "STEP-5.crd",
     "removed": []
   }
 }
