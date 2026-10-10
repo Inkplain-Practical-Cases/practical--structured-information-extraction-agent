@@ -1,4 +1,4 @@
-# STEP-2 — Call offline extraction provider
+# STEP-3 — Parse and validate structured output
 
 ## Build
 A source-aligned cumulative extraction service with type checks, review routing and local fixtures through the current step.
@@ -11,4 +11,4 @@ uvicorn app.main:app --reload
 ```
 
 ## Diagram
-Read STEP-2.crd for each Python component contract; the six-stage portal follows this exact branch.
+Read STEP-3.crd for each Python component contract; the six-stage portal follows this exact branch.

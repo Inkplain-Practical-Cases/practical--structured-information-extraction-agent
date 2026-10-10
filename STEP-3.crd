@@ -1,11 +1,11 @@
 {
   "crd_version": 1,
-  "name": "Structured extraction STEP-2",
-  "description": "Call offline extraction provider",
+  "name": "Structured extraction STEP-3",
+  "description": "Parse and validate structured output",
   "generated_at": "2026-10-10T16:00:00Z",
   "source": {
     "repo": "https://github.com/Inkplain-Practical-Cases/practical--structured-information-extraction-agent",
-    "revision": "step-02-call-offline-extraction-provider",
+    "revision": "step-03-parse-and-validate-structured-output",
     "roots": {
       "backend": "app"
     },
@@ -120,6 +120,19 @@
             "label": "invokes",
             "evidence": "app/features/feature_extraction/handlers/handle_extract.py: extract_email(...)"
           }
+        },
+        {
+          "id": "call-1",
+          "title": "validate_fields",
+          "origin": "imported",
+          "description": "Invokes validate_fields",
+          "show": true,
+          "calls": {
+            "component": "be.validate_fields",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/features/feature_extraction/handlers/handle_extract.py: validate_fields(...)"
+          }
         }
       ],
       "outputs": [
@@ -170,19 +183,111 @@
         }
       ],
       "attributes": {},
+      "step_change": "unchanged"
+    },
+    {
+      "id": "be.validate_fields",
+      "name": "validate_fields",
+      "kind": "function",
+      "side": "backend",
+      "layer": "service",
+      "description": "Runtime validate_fields component for the extraction API.",
+      "flows": [
+        "extract"
+      ],
+      "source": {
+        "file": "app/features/feature_extraction/services/service_validate_fields.py",
+        "symbol": "validate_fields",
+        "lines": [
+          1,
+          45
+        ]
+      },
+      "owner": "feature_extraction",
+      "component_reason": "Observed Python symbol in the learning API",
+      "status": "observed",
+      "inputs": [
+        {
+          "id": "arg",
+          "name": "message or state",
+          "description": "Input accepted by the function"
+        }
+      ],
+      "validations": [],
+      "operations": [
+        {
+          "id": "call-0",
+          "title": "ExtractedRecord",
+          "origin": "imported",
+          "description": "Invokes ExtractedRecord",
+          "show": true,
+          "calls": {
+            "component": "be.ExtractedRecord",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/features/feature_extraction/services/service_validate_fields.py: ExtractedRecord(...)"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "out",
+          "name": "result",
+          "description": "Returned extracted data or updated decision"
+        }
+      ],
+      "attributes": {},
+      "step_change": "added"
+    },
+    {
+      "id": "be.ExtractedRecord",
+      "name": "ExtractedRecord",
+      "kind": "class",
+      "side": "backend",
+      "layer": "schema",
+      "description": "Runtime ExtractedRecord component for the extraction API.",
+      "flows": [
+        "extract"
+      ],
+      "source": {
+        "file": "app/features/feature_extraction/services/service_validate_fields.py",
+        "symbol": "ExtractedRecord",
+        "lines": [
+          1,
+          45
+        ]
+      },
+      "owner": "feature_extraction",
+      "component_reason": "Observed Python symbol in the learning API",
+      "status": "observed",
+      "inputs": [
+        {
+          "id": "arg",
+          "name": "message or state",
+          "description": "Input accepted by the function"
+        }
+      ],
+      "validations": [],
+      "operations": [],
+      "outputs": [
+        {
+          "id": "out",
+          "name": "result",
+          "description": "Returned extracted data or updated decision"
+        }
+      ],
+      "attributes": {},
       "step_change": "added"
     }
   ],
   "dependencies": [],
   "unresolved": [],
   "step": {
-    "no": 2,
+    "no": 3,
     "of": 5,
-    "title": "Call offline extraction provider",
-    "branch": "step-02-call-offline-extraction-provider",
-    "previous": "STEP-1.crd",
-    "removed": [
-      "be.step_2"
-    ]
+    "title": "Parse and validate structured output",
+    "branch": "step-03-parse-and-validate-structured-output",
+    "previous": "STEP-2.crd",
+    "removed": []
   }
 }
