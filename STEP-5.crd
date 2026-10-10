@@ -1,7 +1,8 @@
 {
   "crd_version": 1,
-  "name": "structured-information-extraction-agent STEP-5",
+  "name": "Structured extraction STEP-5",
   "description": "Evaluate extraction fixtures",
+  "generated_at": "2026-10-10T16:00:00Z",
   "source": {
     "repo": "https://github.com/Inkplain-Practical-Cases/practical--structured-information-extraction-agent",
     "revision": "step-05-evaluate-extraction-fixtures",
@@ -12,18 +13,11 @@
       "python-fastapi"
     ]
   },
-  "step": {
-    "no": 5,
-    "of": 5,
-    "title": "Evaluate extraction fixtures",
-    "branch": "step-05-evaluate-extraction-fixtures",
-    "previous": "STEP-4.crd",
-    "removed": []
-  },
   "flows": [
     {
-      "id": "request",
-      "name": "Synthetic request",
+      "id": "extract",
+      "name": "Extract customer intent",
+      "description": "Structured email extraction and decision",
       "entry": "be.process"
     }
   ],
@@ -31,100 +25,415 @@
     {
       "id": "be.process",
       "name": "process",
-      "kind": "function",
+      "kind": "route",
       "side": "backend",
       "layer": "door",
-      "step_change": "changed",
+      "description": "Runtime process component for the extraction API.",
+      "flows": [
+        "extract"
+      ],
       "source": {
         "file": "app/main.py",
-        "symbol": "process"
+        "symbol": "process",
+        "lines": [
+          1,
+          45
+        ]
       },
+      "owner": "feature_extraction",
+      "component_reason": "Observed Python symbol in the learning API",
+      "status": "observed",
+      "inputs": [
+        {
+          "id": "arg",
+          "name": "message or state",
+          "description": "Input accepted by the function"
+        }
+      ],
+      "validations": [],
       "operations": [
         {
-          "id": "op-2",
-          "title": "Call step 2",
+          "id": "call-0",
+          "title": "handle_extract",
+          "origin": "imported",
+          "description": "Invokes handle_extract",
+          "show": true,
           "calls": {
-            "to": "be.step_2",
-            "type": "call"
-          }
-        },
-        {
-          "id": "op-3",
-          "title": "Call step 3",
-          "calls": {
-            "to": "be.step_3",
-            "type": "call"
-          }
-        },
-        {
-          "id": "op-4",
-          "title": "Call step 4",
-          "calls": {
-            "to": "be.step_4",
-            "type": "call"
-          }
-        },
-        {
-          "id": "op-5",
-          "title": "Call step 5",
-          "calls": {
-            "to": "be.step_5",
-            "type": "call"
+            "component": "be.handle_extract",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/main.py: handle_extract(...)"
           }
         }
-      ]
+      ],
+      "outputs": [
+        {
+          "id": "out",
+          "name": "result",
+          "description": "Returned extracted data or updated decision"
+        }
+      ],
+      "attributes": {
+        "endpoint": "POST /process"
+      },
+      "step_change": "changed"
     },
     {
-      "id": "be.step_2",
-      "name": "transform_2",
+      "id": "be.handle_extract",
+      "name": "handle_extract",
+      "kind": "function",
+      "side": "backend",
+      "layer": "handler",
+      "description": "Runtime handle_extract component for the extraction API.",
+      "flows": [
+        "extract"
+      ],
+      "source": {
+        "file": "app/features/feature_extraction/handlers/handle_extract.py",
+        "symbol": "handle_extract",
+        "lines": [
+          1,
+          45
+        ]
+      },
+      "owner": "feature_extraction",
+      "component_reason": "Observed Python symbol in the learning API",
+      "status": "observed",
+      "inputs": [
+        {
+          "id": "arg",
+          "name": "message or state",
+          "description": "Input accepted by the function"
+        }
+      ],
+      "validations": [],
+      "operations": [
+        {
+          "id": "call-0",
+          "title": "extract_email",
+          "origin": "imported",
+          "description": "Invokes extract_email",
+          "show": true,
+          "calls": {
+            "component": "be.extract_email",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/features/feature_extraction/handlers/handle_extract.py: extract_email(...)"
+          }
+        },
+        {
+          "id": "call-1",
+          "title": "validate_fields",
+          "origin": "imported",
+          "description": "Invokes validate_fields",
+          "show": true,
+          "calls": {
+            "component": "be.validate_fields",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/features/feature_extraction/handlers/handle_extract.py: validate_fields(...)"
+          }
+        },
+        {
+          "id": "call-2",
+          "title": "route_review",
+          "origin": "imported",
+          "description": "Invokes route_review",
+          "show": true,
+          "calls": {
+            "component": "be.route_review",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/features/feature_extraction/handlers/handle_extract.py: route_review(...)"
+          }
+        },
+        {
+          "id": "call-3",
+          "title": "evaluate_fixtures",
+          "origin": "imported",
+          "description": "Invokes evaluate_fixtures",
+          "show": true,
+          "calls": {
+            "component": "be.evaluate_fixtures",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/features/feature_extraction/handlers/handle_extract.py: evaluate_fixtures(...)"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "out",
+          "name": "result",
+          "description": "Returned extracted data or updated decision"
+        }
+      ],
+      "attributes": {},
+      "step_change": "changed"
+    },
+    {
+      "id": "be.extract_email",
+      "name": "extract_email",
       "kind": "function",
       "side": "backend",
       "layer": "service",
-      "step_change": "unchanged",
+      "description": "Extract email, date and request intent deterministically from a synthetic message.",
+      "flows": [
+        "extract"
+      ],
       "source": {
-        "file": "app/features/step_2.py",
-        "symbol": "transform"
+        "file": "app/features/feature_extraction/services/service_extract_email.py",
+        "symbol": "extract_email",
+        "lines": [
+          1,
+          45
+        ]
       },
-      "operations": []
+      "owner": "feature_extraction",
+      "component_reason": "Observed Python symbol in the learning API",
+      "status": "observed",
+      "inputs": [
+        {
+          "id": "arg",
+          "name": "message or state",
+          "description": "Input accepted by the function"
+        }
+      ],
+      "validations": [],
+      "operations": [],
+      "outputs": [
+        {
+          "id": "out",
+          "name": "result",
+          "description": "Returned extracted data or updated decision"
+        }
+      ],
+      "attributes": {},
+      "step_change": "unchanged"
     },
     {
-      "id": "be.step_3",
-      "name": "transform_3",
+      "id": "be.validate_fields",
+      "name": "validate_fields",
       "kind": "function",
       "side": "backend",
       "layer": "service",
-      "step_change": "unchanged",
+      "description": "Runtime validate_fields component for the extraction API.",
+      "flows": [
+        "extract"
+      ],
       "source": {
-        "file": "app/features/step_3.py",
-        "symbol": "transform"
+        "file": "app/features/feature_extraction/services/service_validate_fields.py",
+        "symbol": "validate_fields",
+        "lines": [
+          1,
+          45
+        ]
       },
-      "operations": []
+      "owner": "feature_extraction",
+      "component_reason": "Observed Python symbol in the learning API",
+      "status": "observed",
+      "inputs": [
+        {
+          "id": "arg",
+          "name": "message or state",
+          "description": "Input accepted by the function"
+        }
+      ],
+      "validations": [],
+      "operations": [
+        {
+          "id": "call-0",
+          "title": "ExtractedRecord",
+          "origin": "imported",
+          "description": "Invokes ExtractedRecord",
+          "show": true,
+          "calls": {
+            "component": "be.ExtractedRecord",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/features/feature_extraction/services/service_validate_fields.py: ExtractedRecord(...)"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "out",
+          "name": "result",
+          "description": "Returned extracted data or updated decision"
+        }
+      ],
+      "attributes": {},
+      "step_change": "unchanged"
     },
     {
-      "id": "be.step_4",
-      "name": "transform_4",
+      "id": "be.ExtractedRecord",
+      "name": "ExtractedRecord",
+      "kind": "class",
+      "side": "backend",
+      "layer": "schema",
+      "description": "Runtime ExtractedRecord component for the extraction API.",
+      "flows": [
+        "extract"
+      ],
+      "source": {
+        "file": "app/features/feature_extraction/services/service_validate_fields.py",
+        "symbol": "ExtractedRecord",
+        "lines": [
+          1,
+          45
+        ]
+      },
+      "owner": "feature_extraction",
+      "component_reason": "Observed Python symbol in the learning API",
+      "status": "observed",
+      "inputs": [
+        {
+          "id": "arg",
+          "name": "message or state",
+          "description": "Input accepted by the function"
+        }
+      ],
+      "validations": [],
+      "operations": [],
+      "outputs": [
+        {
+          "id": "out",
+          "name": "result",
+          "description": "Returned extracted data or updated decision"
+        }
+      ],
+      "attributes": {},
+      "step_change": "unchanged"
+    },
+    {
+      "id": "be.route_review",
+      "name": "route_review",
       "kind": "function",
       "side": "backend",
       "layer": "service",
-      "step_change": "unchanged",
+      "description": "Require human review for missing email or unknown intent.",
+      "flows": [
+        "extract"
+      ],
       "source": {
-        "file": "app/features/step_4.py",
-        "symbol": "transform"
+        "file": "app/features/feature_extraction/services/service_review.py",
+        "symbol": "route_review",
+        "lines": [
+          1,
+          45
+        ]
       },
-      "operations": []
+      "owner": "feature_extraction",
+      "component_reason": "Observed Python symbol in the learning API",
+      "status": "observed",
+      "inputs": [
+        {
+          "id": "arg",
+          "name": "message or state",
+          "description": "Input accepted by the function"
+        }
+      ],
+      "validations": [],
+      "operations": [],
+      "outputs": [
+        {
+          "id": "out",
+          "name": "result",
+          "description": "Returned extracted data or updated decision"
+        }
+      ],
+      "attributes": {},
+      "step_change": "unchanged"
     },
     {
-      "id": "be.step_5",
-      "name": "transform_5",
+      "id": "be.evaluate_fixtures",
+      "name": "evaluate_fixtures",
       "kind": "function",
       "side": "backend",
       "layer": "service",
-      "step_change": "added",
+      "description": "Score three fixture outputs.",
+      "flows": [
+        "extract"
+      ],
       "source": {
-        "file": "app/features/step_5.py",
-        "symbol": "transform"
+        "file": "app/features/feature_extraction/services/service_evaluate.py",
+        "symbol": "evaluate_fixtures",
+        "lines": [
+          1,
+          45
+        ]
       },
-      "operations": []
+      "owner": "feature_extraction",
+      "component_reason": "Observed Python symbol in the learning API",
+      "status": "observed",
+      "inputs": [
+        {
+          "id": "arg",
+          "name": "message or state",
+          "description": "Input accepted by the function"
+        }
+      ],
+      "validations": [],
+      "operations": [
+        {
+          "id": "call-0",
+          "title": "extract_email",
+          "origin": "imported",
+          "description": "Invokes extract_email",
+          "show": true,
+          "calls": {
+            "component": "be.extract_email",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/features/feature_extraction/services/service_evaluate.py: extract_email(...)"
+          }
+        },
+        {
+          "id": "call-1",
+          "title": "validate_fields",
+          "origin": "imported",
+          "description": "Invokes validate_fields",
+          "show": true,
+          "calls": {
+            "component": "be.validate_fields",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/features/feature_extraction/services/service_evaluate.py: validate_fields(...)"
+          }
+        },
+        {
+          "id": "call-2",
+          "title": "route_review",
+          "origin": "imported",
+          "description": "Invokes route_review",
+          "show": true,
+          "calls": {
+            "component": "be.route_review",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/features/feature_extraction/services/service_evaluate.py: route_review(...)"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "out",
+          "name": "result",
+          "description": "Returned extracted data or updated decision"
+        }
+      ],
+      "attributes": {},
+      "step_change": "added"
     }
-  ]
+  ],
+  "dependencies": [],
+  "unresolved": [],
+  "step": {
+    "no": 5,
+    "of": 5,
+    "title": "Evaluate extraction fixtures",
+    "branch": "step-05-evaluate-extraction-fixtures",
+    "previous": "STEP-4.crd",
+    "removed": []
+  }
 }
