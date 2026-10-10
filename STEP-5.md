@@ -1,4 +1,4 @@
-# STEP-4 — Route uncertainty to review
+# STEP-5 — Evaluate extraction fixtures
 
 ## Build
 A source-aligned cumulative extraction service with type checks, review routing and local fixtures through the current step.
@@ -11,4 +11,4 @@ uvicorn app.main:app --reload
 ```
 
 ## Diagram
-Read STEP-4.crd for each Python component contract; the six-stage portal follows this exact branch.
+Read STEP-5.crd for each Python component contract; the six-stage portal follows this exact branch.

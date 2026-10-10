@@ -1,4 +1,4 @@
-# STEP-4: regression tests of all features available on this branch.
+# STEP-5: regression tests of all features available on this branch.
 from fastapi.testclient import TestClient
 from app.main import app
 client=TestClient(app)
@@ -13,3 +13,6 @@ def test_invalid_request():
 def test_review_when_missing_customer():
     r=client.post("/process",json={"message":"Please help me"})
     assert r.json()["review_required"] is True
+def test_evaluation():
+    r=client.post("/process",json={"message":"Booking for omar@example.com"})
+    assert r.json()["evaluation"]["passed"]==3
