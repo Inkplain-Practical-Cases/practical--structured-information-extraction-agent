@@ -1,0 +1,188 @@
+{
+  "crd_version": 1,
+  "name": "Structured extraction STEP-2",
+  "description": "Call offline extraction provider",
+  "generated_at": "2026-10-10T16:00:00Z",
+  "source": {
+    "repo": "https://github.com/Inkplain-Practical-Cases/practical--structured-information-extraction-agent",
+    "revision": "step-02-call-offline-extraction-provider",
+    "roots": {
+      "backend": "app"
+    },
+    "stacks": [
+      "python-fastapi"
+    ]
+  },
+  "flows": [
+    {
+      "id": "extract",
+      "name": "Extract customer intent",
+      "description": "Structured email extraction and decision",
+      "entry": "be.process"
+    }
+  ],
+  "components": [
+    {
+      "id": "be.process",
+      "name": "process",
+      "kind": "route",
+      "side": "backend",
+      "layer": "door",
+      "description": "Runtime process component for the extraction API.",
+      "flows": [
+        "extract"
+      ],
+      "source": {
+        "file": "app/main.py",
+        "symbol": "process",
+        "lines": [
+          1,
+          45
+        ]
+      },
+      "owner": "feature_extraction",
+      "component_reason": "Observed Python symbol in the learning API",
+      "status": "observed",
+      "inputs": [
+        {
+          "id": "arg",
+          "name": "message or state",
+          "description": "Input accepted by the function"
+        }
+      ],
+      "validations": [],
+      "operations": [
+        {
+          "id": "call-0",
+          "title": "handle_extract",
+          "origin": "imported",
+          "description": "Invokes handle_extract",
+          "show": true,
+          "calls": {
+            "component": "be.handle_extract",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/main.py: handle_extract(...)"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "out",
+          "name": "result",
+          "description": "Returned extracted data or updated decision"
+        }
+      ],
+      "attributes": {
+        "endpoint": "POST /process"
+      },
+      "step_change": "changed"
+    },
+    {
+      "id": "be.handle_extract",
+      "name": "handle_extract",
+      "kind": "function",
+      "side": "backend",
+      "layer": "handler",
+      "description": "Runtime handle_extract component for the extraction API.",
+      "flows": [
+        "extract"
+      ],
+      "source": {
+        "file": "app/features/feature_extraction/handlers/handle_extract.py",
+        "symbol": "handle_extract",
+        "lines": [
+          1,
+          45
+        ]
+      },
+      "owner": "feature_extraction",
+      "component_reason": "Observed Python symbol in the learning API",
+      "status": "observed",
+      "inputs": [
+        {
+          "id": "arg",
+          "name": "message or state",
+          "description": "Input accepted by the function"
+        }
+      ],
+      "validations": [],
+      "operations": [
+        {
+          "id": "call-0",
+          "title": "extract_email",
+          "origin": "imported",
+          "description": "Invokes extract_email",
+          "show": true,
+          "calls": {
+            "component": "be.extract_email",
+            "type": "call",
+            "label": "invokes",
+            "evidence": "app/features/feature_extraction/handlers/handle_extract.py: extract_email(...)"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "id": "out",
+          "name": "result",
+          "description": "Returned extracted data or updated decision"
+        }
+      ],
+      "attributes": {},
+      "step_change": "changed"
+    },
+    {
+      "id": "be.extract_email",
+      "name": "extract_email",
+      "kind": "function",
+      "side": "backend",
+      "layer": "service",
+      "description": "Extract email, date and request intent deterministically from a synthetic message.",
+      "flows": [
+        "extract"
+      ],
+      "source": {
+        "file": "app/features/feature_extraction/services/service_extract_email.py",
+        "symbol": "extract_email",
+        "lines": [
+          1,
+          45
+        ]
+      },
+      "owner": "feature_extraction",
+      "component_reason": "Observed Python symbol in the learning API",
+      "status": "observed",
+      "inputs": [
+        {
+          "id": "arg",
+          "name": "message or state",
+          "description": "Input accepted by the function"
+        }
+      ],
+      "validations": [],
+      "operations": [],
+      "outputs": [
+        {
+          "id": "out",
+          "name": "result",
+          "description": "Returned extracted data or updated decision"
+        }
+      ],
+      "attributes": {},
+      "step_change": "added"
+    }
+  ],
+  "dependencies": [],
+  "unresolved": [],
+  "step": {
+    "no": 2,
+    "of": 5,
+    "title": "Call offline extraction provider",
+    "branch": "step-02-call-offline-extraction-provider",
+    "previous": "STEP-1.crd",
+    "removed": [
+      "be.step_2"
+    ]
+  }
+}

@@ -1,23 +1,10 @@
-"""structured information extraction agent: FastAPI learning entry point.
-ICS layer: door / composition root.
-Why it exists: binds a typed request handler to an HTTP endpoint.
-Without it: requests cannot reach the example service.
-Step: added in step 1 (Define email and extraction schema).
-"""
+# FastAPI door delegates request handling to a separate feature handler.
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
-
-app = FastAPI(title="structured information extraction agent")
-
+from app.features.feature_extraction.handlers.handle_extract import handle_extract
+app=FastAPI(title="Structured Information Extraction Agent")
 class Request(BaseModel):
-    """A synthetic message that can be validated without a provider."""
-    message: str = Field(min_length=1, max_length=2000)
-
-def handle_request(message: str) -> dict[str, str]:
-    """Return an explicit local acknowledgement, not a fabricated AI result."""
-    return {"status": "accepted", "message": message}
-
+    message: str = Field(min_length=1,max_length=2000)
 @app.post("/process")
-def process(request: Request) -> dict[str, str]:
-    """Enforce the request schema before passing to the handler."""
-    return handle_request(request.message)
+def process(request:Request)->dict:
+    return handle_extract(request.message)
