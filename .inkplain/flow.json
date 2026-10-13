@@ -62,7 +62,7 @@
     },
     "content": {
       "status": "done",
-      "summary": "Source audit of complete FastAPI extraction pipeline and all feature services: data is returned in-process; no persistent database, table or collection. The existing five flow tabs remain correct. No .erd or database lesson is created.",
+      "summary": "Persisted extraction API request/outcome metadata in SQLite at STEP-5; generated STEP-5 and FINAL ERD, Simulator tab and portal Database lesson.",
       "started_at": "2026-10-10T15:51:36.873Z",
       "finished_at": "2026-10-10T15:58:50.859Z",
       "updated_by": "api-key:for-chatgpt-test-2",
@@ -72,12 +72,14 @@
         "items": 30,
         "structural_qa": true,
         "erd_audit_complete": true,
-        "erd_applicable_steps": [],
+        "erd_applicable_steps": [
+          5
+        ],
         "erd_item_title": "Database (Entity) Relations",
-        "erd_lessons_created": 0,
-        "erd_not_applicable": true
+        "erd_lessons_created": 1,
+        "erd_not_applicable": false
       }
     }
   },
-  "updated_at": "2026-10-13T13:40:36.675Z"
+  "updated_at": "2026-10-13T16:09:42.658Z"
 }
