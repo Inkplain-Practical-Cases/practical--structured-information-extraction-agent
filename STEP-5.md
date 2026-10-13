@@ -12,3 +12,6 @@ uvicorn app.main:app --reload
 
 ## Diagram
 Read STEP-5.crd for each Python component contract; the six-stage portal follows this exact branch.
+
+## Database (Entity) Relations
+SQLite stores extraction API HTTP request/outcome metadata without source text. See STEP-5.erd and STEP-5-ERD.

@@ -8,3 +8,7 @@ class Request(BaseModel):
 @app.post("/process")
 def process(request:Request)->dict:
     return handle_extract(request.message)
+
+# Record only HTTP metadata and outcomes after extraction requests.
+from app.core.request_audit_middleware import RequestAuditMiddleware
+app.add_middleware(RequestAuditMiddleware)
